@@ -26,19 +26,28 @@ struct SideMenuView: View {
             .padding(.leading)
             ForEach(SideMenuViewModel.allCases, id:\.self){
                 item in
-                HStack(spacing:16){
-                    Image(systemName: item.imageName)
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    Text(item.title)
-                        .font(.subheadline)
-                    
-                    Spacer()
+                if item == .profile{
+                    NavigationLink{
+                        ProfileView()
+                    }label:{
+                        SideMenuRowView(item: item)
+                    }
+                } else if item == .logout{
+                    Button {
+                        
+                    } label: {
+                        SideMenuRowView(item: item)
+
+                    }
+
+                } else{
+                    SideMenuRowView(item: item)
+
                 }
-                .frame(height: 40)
+               
              
             }
-            .padding(.horizontal)
+          
             
             Spacer()
         }
