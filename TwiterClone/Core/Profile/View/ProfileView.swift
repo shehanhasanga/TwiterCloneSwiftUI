@@ -14,8 +14,12 @@ struct ProfileView: View {
     @Namespace var animation
     private var user : User
     
+    var profileViewMOdel : ProfileViewModel
+   
+    
     init(user:User){
         self.user = user
+        self.profileViewMOdel = ProfileViewModel(user: user)
     }
     
     var body: some View {
@@ -72,7 +76,7 @@ extension ProfileView{
             Button {
                 
             } label: {
-                Text("Edit Profile")
+                Text(profileViewMOdel.actionBtnTitle)
                     .font(.subheadline).bold()
                     .frame(width: 120, height: 32)
                     .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 0.75))
@@ -121,9 +125,9 @@ extension ProfileView{
     var tweetsUi : some View{
         ScrollView{
             LazyVStack{
-                ForEach(1..<10, id:\.self){
-                    _ in
-                    TweetsRowView()
+                ForEach(profileViewMOdel.tweets(filter: self.selectionFilter)){
+                    tweet in
+                    TweetsRowView(tweet: tweet)
                         .padding(.horizontal)
                 }
             }

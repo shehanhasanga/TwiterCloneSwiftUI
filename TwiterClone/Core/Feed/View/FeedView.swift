@@ -9,12 +9,13 @@ import SwiftUI
 
 struct FeedView: View {
     @State var showNewTweetView: Bool = false
+    @ObservedObject var viewModel =  FeedViewModel()
     var body: some View {
         ZStack(alignment:.bottomTrailing){
             ScrollView {
                 LazyVStack{
-                    ForEach( 1..<10, id: \.self){_ in
-                        TweetsRowView()
+                    ForEach( viewModel.tweets){tweet in
+                        TweetsRowView(tweet: tweet)
                             .padding()
                     }
                 }
@@ -37,13 +38,14 @@ struct FeedView: View {
             }
 
         }
+        .navigationBarTitleDisplayMode(.inline)
         
        
     }
 }
 
-struct FeedView_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedView()
-    }
-}
+//struct FeedView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FeedView()
+//    }
+//}
