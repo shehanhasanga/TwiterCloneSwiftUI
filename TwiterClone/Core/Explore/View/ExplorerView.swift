@@ -16,7 +16,7 @@ struct ExplorerView: View {
                         ForEach(1..<20, id: \.self){
                             _ in
                             NavigationLink{
-                                ProfileView()
+//                                ProfileView()
                             } label: {
                                 UserRowView()
                             }

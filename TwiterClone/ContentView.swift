@@ -6,10 +6,26 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ContentView: View {
     @State var showSidemenu:Bool = false
+    @EnvironmentObject var viewModel : AuthViewModel
     var body: some View {
+        Group{
+            if viewModel.userSession == nil {
+                LoginView()
+            } else{
+                maininterfaceView
+            }
+            
+        }
+        
+    }
+}
+
+extension ContentView{
+    var maininterfaceView: some View{
         ZStack(alignment:.topLeading) {
             MainTabView()
                 .navigationBarHidden(showSidemenu)
@@ -34,23 +50,27 @@ struct ContentView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    withAnimation(Animation.easeInOut) {
-                        showSidemenu.toggle()
+                if let user = viewModel.currentUser {
+                    Button {
+                        withAnimation(Animation.easeInOut) {
+                            showSidemenu.toggle()
+                        }
+                        
+                    } label: {
+                        KFImage(URL(string: user.profileImageUrl))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 32, height: 32)
+                            .clipShape(Circle())
+                          
                     }
-                    
-                } label: {
-                    Circle()
-                        .frame(width: 32, height: 32)
                 }
-
                 
             }
         }
         .onAppear {
             showSidemenu = false
         }
-        
     }
 }
 

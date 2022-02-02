@@ -11,6 +11,7 @@ struct CustomInputView: View {
     let imageName:String
     let placeholderText : String
     @Binding var text : String
+    var isSecureField: Bool? = false
     var body: some View {
         VStack{
             HStack{
@@ -19,8 +20,12 @@ struct CustomInputView: View {
                     .scaleEffect()
                     .frame(width: 24, height: 20)
                     .foregroundColor(Color(.darkGray))
-                
-                TextField(placeholderText, text: $text)
+                if isSecureField ?? false {
+                    SecureField(placeholderText, text: $text)
+                } else{
+                    TextField(placeholderText, text: $text)
+                }
+               
             }
             Divider()
                 .background(Color(.darkGray))
